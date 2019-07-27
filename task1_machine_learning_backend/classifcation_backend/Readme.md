@@ -1,6 +1,8 @@
-# PTSD Classfiier backend
+# PTSD Classfier backend
 
 Version : 0.1
+
+The classifier backend is based in the tool MLFlow. 
 
 ## Structure
 
