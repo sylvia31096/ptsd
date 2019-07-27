@@ -15,6 +15,28 @@ from sklearn.linear_model import ElasticNet
 import mlflow
 import mlflow.sklearn
 
+def prepare_data(data):
+    """
+        Return a prepared dataframe
+        input : Dataframe with expected schema
+
+    """
+    dataframe_targets = data.groupby("transcript_id").sum()[
+        ["A1", "B1", "B2", "B3", "B4", "B5", "C1", "C2", "D1", "D2", "D3", "D4", "D5", "D6", "D7", "E1", "E2", "E3",
+         "E4", "E5", "E6", "F1", "G1"]]
+    data_frame_text_fields = data.groupby("transcript_id")["text"].agg(lambda col: ''.join(col))
+    data_frame_text_fields = data_frame_text_fields.to_frame()
+    data_frame_text_fields.reset_index(level=0, inplace=True)
+    dataframe_targets.reset_index(level=0, inplace=True)
+    data_frame_merged = pd.merge(dataframe_targets, data_frame_text_fields, on="transcript_id")
+    criterions = ["A1", "B1", "B2", "B3", "B4", "B5", "C1", "C2", "D1", "D2", "D3", "D4", "D5", "D6", "D7", "E1", "E2",
+                  "E3", "E4", "E5", "E6", "F1", "G1"]
+
+    processed_df = data_frame_merged
+    for criterion in criterions:
+        processed_df[criterion] = processed_df[criterion].apply(lambda x: 1 if x >= 0.5 else 0)
+
+    return processed_df
 
 def eval_metrics(actual, pred):
     rmse = np.sqrt(mean_squared_error(actual, pred))
@@ -30,14 +52,16 @@ if __name__ == "__main__":
     wine_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "wine-quality.csv")
     data = pd.read_csv(wine_path)
 
+    prepared_data = prepare_data(data)
+
     # Split the data into training and test sets. (0.75, 0.25) split.
-    train, test = train_test_split(data)
+    train, test = train_test_split(prepared_data)
 
     # The predicted column is "quality" which is a scalar from [3, 9]
-    train_x = train.drop(["quality"], axis=1)
-    test_x = test.drop(["quality"], axis=1)
-    train_y = train[["quality"]]
-    test_y = test[["quality"]]
+    train_x = train.drop(["A1"], axis=1)
+    test_x = test.drop(["A1"], axis=1)
+    train_y = train[["A1"]]
+    test_y = test[["A1"]]
 
     alpha = float(sys.argv[1]) if len(sys.argv) > 1 else 0.5
     l1_ratio = float(sys.argv[2]) if len(sys.argv) > 2 else 0.5
