@@ -3,6 +3,8 @@
 Version : 0.1
 
 The classifier backend leverages the open source tool MLFlow. 
+ 
+Please get familiarized to easily understand this project. MLFlow website available in: https://mlflow.org/
 
 ## Load Data
 Add under the folder ./data/transcripts with the filename PTSD_data.csv the annotated standard dataset.
@@ -16,7 +18,7 @@ Add under the folder ./data/transcripts with the filename PTSD_data.csv the anno
 
 *./conda.yaml* : Conda file w/ all the project dependencies.
 
-*./multi_label_lg_data_pipeline.ipynb* : Multilabel reference pipeline, very simple. 
+*./multi_label_lg_data_pipeline.ipynb* : Multilabel reference pipeline, with the step by step implementation. 
 
 *./MLProject* : MLflow reference project.
 
