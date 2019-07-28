@@ -73,27 +73,18 @@ if __name__ == "__main__":
 
         criterions = get_criterions()
 
+        accuracy_cummulative = 0
+
         for category in criterions:
             print('... Processing {}'.format(category))
             # train the model using X_dtm & y
             LogReg_pipeline.fit(X_train, train[category])
             # compute the testing accuracy
             prediction = LogReg_pipeline.predict(X_test)
+            accuracy = accuracy_score(test[category], prediction)
+            accuracy_cummulative += accuracy
             print('Test accuracy is {}'.format(accuracy_score(test[category], prediction)))
+            mlflow.log_metric("model"+category, accuracy)
+            mlflow.sklearn.log_model(LogReg_pipeline, "model"+category)
 
-        #predicted_qualities = lr.predict(test_x)
-
-        #(rmse, mae, r2) = eval_metrics(test_y, predicted_qualities)
-
-        #print("Logistic Regression model (alpha=%f, l1_ratio=%f):" % (alpha, l1_ratio))
-        #print("  RMSE: %s" % rmse)
-        #print("  MAE: %s" % mae)
-        #print("  R2: %s" % r2)
-
-        #mlflow.log_param("alpha", alpha)
-        #mlflow.log_param("l1_ratio", l1_ratio)
-        #mlflow.log_metric("rmse", rmse)
-        #mlflow.log_metric("r2", r2)
-        #mlflow.log_metric("mae", mae)
-
-        #mlflow.sklearn.log_model(lr, "model")
+        mlflow.log_metric("model_average_accuracy", accuracy_cummulative/len(criterions))
