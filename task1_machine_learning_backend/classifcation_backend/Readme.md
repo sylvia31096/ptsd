@@ -4,11 +4,17 @@ Version : 0.1
 
 The classifier backend leverages the open source tool MLFlow. 
 
+## Load Data
+Add under the folder ./data/transcripts with the filename PTSD_data.csv the annotated standard dataset.
+ 
+
 ## Files and directory structure
 
 *./data/transcripts/PTSD_data.csv* : The initial dataset annotated. Export the relevant spreadsheet from csv.
 
-*./Dockerfile* : Initial Dockerfile of the solution.
+*./Dockerfile* : Initial Dockerfile of the solution - Not functional.
+
+*./conda.yaml* : Conda file w/ all the project dependencies.
 
 *./multi_label_lg_data_pipeline.ipynb* : Multilabel reference pipeline, very simple. 
 
@@ -16,7 +22,22 @@ The classifier backend leverages the open source tool MLFlow.
 
 *./train.py* : The training source code file.
 
-## How to run it
+## How to run training
+
+`$ mlflow run .`
+
+## How to run a listening prediction api
+Using the id of the model and the model name you can run the following commnad :
+
+`$  mlflow models serve -m runs:/bd925a4361fc4910af3f318b0293b1bc/modelA1/ -p 1234  .`
+
+
+## How to run a prediction
+
+`curl http://127.0.0.1:1234/invocations -H 'Content-Type: application/json' -d '{
+    "columns": ["text"],
+    "data": [["hey"]]
+}'`
 
 ### Download the annotation data spreadsheet and export it as it is. 
 
