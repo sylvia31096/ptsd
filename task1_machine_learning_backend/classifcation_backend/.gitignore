@@ -1,0 +1,3 @@
+data/transcripts/*
+.ipynb_checkpoints/*
+mlruns/
