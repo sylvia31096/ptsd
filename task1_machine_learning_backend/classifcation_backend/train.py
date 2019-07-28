@@ -1,7 +1,3 @@
-# The data set used in this example is from http://archive.ics.uci.edu/ml/datasets/Wine+Quality
-# P. Cortez, A. Cerdeira, F. Almeida, T. Matos and J. Reis.
-# Modeling wine preferences by data mining from physicochemical properties. In Decision Support Systems, Elsevier, 47(4):547-553, 2009.
-
 import os
 import warnings
 import sys
@@ -9,8 +5,6 @@ import sys
 import pandas as pd
 import numpy as np
 from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score
-from sklearn.model_selection import train_test_split
-from sklearn.linear_model import ElasticNet
 from sklearn.pipeline import Pipeline
 from sklearn.linear_model import LogisticRegression
 from sklearn.feature_extraction.text import TfidfVectorizer
@@ -18,7 +12,6 @@ from sklearn.multiclass import OneVsRestClassifier
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score
 
-import mlflow
 import mlflow.sklearn
 
 
@@ -66,14 +59,6 @@ if __name__ == "__main__":
     train, test = train_test_split(prepared_data, random_state=42, test_size=0.33, shuffle=True)
     X_train = train.text
     X_test = test.text
-
-    #print(X_train.shape)
-    #print(X_test.shape)
-    # The predicted column is "quality" which is a scalar from [3, 9]
-    #train_x = train.drop(["A1"], axis=1)
-    #test_x = test.drop(["A1"], axis=1)
-    #train_y = train[["A1"]]
-    #test_y = test[["A1"]]
 
     alpha = float(sys.argv[1]) if len(sys.argv) > 1 else 0.5
     l1_ratio = float(sys.argv[2]) if len(sys.argv) > 2 else 0.5
