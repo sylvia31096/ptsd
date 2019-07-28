@@ -22,7 +22,7 @@ Add under the folder ./data/transcripts with the filename PTSD_data.csv the anno
 
 *./MLProject* : MLflow reference project.
 
-*./train.py* : The training source code file.
+*./train.py* : The training source code file. 
 
 ## How to run training
 
@@ -34,18 +34,8 @@ Using the id of the model and the model name you can run the following commnad :
 `$  mlflow models serve -m runs:/bd925a4361fc4910af3f318b0293b1bc/modelA1/ -p 1234  .`
 
 
-## How to run a prediction
 
-`curl http://127.0.0.1:1234/invocations -H 'Content-Type: application/json' -d '{
-    "columns": ["text"],
-    "data": [["hey"]]
-}'`
-
-### Download the annotation data spreadsheet and export it as it is. 
-
-
-### To run training command you can use the command below from within the directory of the project:
- 
+You can also run it directly from your local python environment: 
  ` 
 ╰─$ python ./train.py                    
 
@@ -63,3 +53,13 @@ Test accuracy is 1.0
 ... Processing G1
 Test accuracy is 1.0
 ` 
+
+## How to run a prediction
+
+`curl http://127.0.0.1:1234/invocations -H 'Content-Type: application/json' -d '{
+    "columns": ["text"],
+    "data": [["hey"]]
+}'`
+
+## How to add a new algorithm
+You can modify the train.py file .
