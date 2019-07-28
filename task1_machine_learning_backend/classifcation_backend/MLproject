@@ -1,9 +1,7 @@
-docker_env:
-  image:  mlflow-docker-example
+name: OmdenaPTSD
+
+conda_env: conda.yaml
 
 entry_points:
   main:
-    parameters:
-      alpha: float
-      l1_ratio: {type: float, default: 0.1}
-    command: "python train.py --alpha {alpha} --l1-ratio {l1_ratio}"
+    command: "python train.py"
