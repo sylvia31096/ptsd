@@ -1,0 +1,4 @@
+__pycache__
+ptsd_models/
+credentials.yml
+*.log

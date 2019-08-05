@@ -1,0 +1,51 @@
+%YAML 1.1
+---
+actions:
+- utter_welcome
+- utter_continue_prompt
+- utter_get_started
+- utter_goodbye
+- utter_greet
+- utter_intro
+- utter_question_1
+- utter_question_2
+- utter_referral
+- utter_sorry_cannot_help
+- utter_sorry_to_hear
+- utter_understand_does_not_want_help
+intents:
+- greet
+- affirm
+- deny
+- human_handoff
+- goodbye
+templates:
+  utter_welcome:
+  - text: "Welcome!"
+  utter_continue_prompt:
+  - text: Do you want to continue?
+  utter_get_started:
+  - text: Great! Let's get started.
+  utter_goodbye:
+  - text: Thanks for chatting with me. Bye, bye!
+  utter_greet:
+  - text: Hello!
+  utter_intro:
+  - text: I'm a bot who can help you determine if you are suffering from PTSD. I will
+      be asking you some sensitive questions. If you want to stop at any time, just
+      let me know.
+  utter_question_1:
+  - text: Have you experienced or witnessed a life-threatening event that caused intense
+      fear, helplessness, or horror?
+  utter_question_2:
+  - text: In the past month, have you had any unwanted memories of the event while
+      you were awake, so not counting dreams?
+  utter_referral:
+  - text: If you want to talk to a person, please try calling 222-222-2222. If this
+      is an emergency please call 911 or 112 (depending on your country).
+  utter_sorry_cannot_help:
+  - text: I'm sorry I don't think I can help 🙁.
+  utter_sorry_to_hear:
+  - text: Sorry to hear that.
+  utter_understand_does_not_want_help:
+  - text: I understand. If you want to chat later, please come back.
