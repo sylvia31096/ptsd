@@ -46,6 +46,21 @@ def eval_metrics(actual, pred):
     r2 = r2_score(actual, pred)
     return rmse, mae, r2
 
+class MultiLabelWrapper(mlflow.pyfunc.PythonModel):
+
+    def load_context(self, context):
+        criterions = get_criterions()
+        self.models = []
+        for category in criterions:
+            self.models[category]=mlflow.sklearn.load_model("model"+category)
+
+    def predict(self, context, model_input):
+        criterions = get_criterions()
+        for category in criterions:
+            model_input[category]=self.models[category].predict(model_input)
+
+        return model_input
+
 if __name__ == "__main__":
     warnings.filterwarnings("ignore")
     np.random.seed(40)
@@ -88,3 +103,7 @@ if __name__ == "__main__":
             mlflow.sklearn.log_model(LogReg_pipeline, "model"+category)
 
         mlflow.log_metric("model_average_accuracy", accuracy_cummulative/len(criterions))
+
+        all_labels_path = "all_labels_path"
+        multi_label_wrapper = MultiLabelWrapper()
+        mlflow.pyfunc.log_model(multi_label_wrapper, all_labels_path)
