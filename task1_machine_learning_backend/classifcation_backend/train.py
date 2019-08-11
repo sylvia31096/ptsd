@@ -26,7 +26,7 @@ def prepare_data(data):
 
     """
     dataframe_targets = data.groupby("transcript_id").sum()[get_criterions()]
-    data_frame_text_fields = data.groupby("transcript_id")["text"].agg(lambda col: ''.join(col))
+    data_frame_text_fields = data.groupby("transcript_id")["text"].agg(lambda col: ' '.join(col))
     data_frame_text_fields = data_frame_text_fields.to_frame()
     data_frame_text_fields.reset_index(level=0, inplace=True)
     dataframe_targets.reset_index(level=0, inplace=True)
